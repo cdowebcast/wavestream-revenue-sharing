@@ -1,0 +1,8 @@
+**/node_modules/
+**/.blockchain/
+*.log
+*.sublime-workspace
+
+/coverage/
+/coverage.json
+/coverageEnv/

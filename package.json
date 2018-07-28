@@ -1,0 +1,64 @@
+{
+  "name": "private-crowdsale",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "TEST=1 truffle test",
+    "coverage": "TEST=1 solidity-coverage",
+    "migrate-local": "truffle migrate --network local",
+    "migrate-rinkeby": "truffle migrate --network rinkeby",
+    "migrate-mainnet": "truffle migrate --network live",
+    "lint": "solium -d contracts",
+    "fix-sol": "solium -d contracts --fix || true",
+    "fix-js": "prettier --config .prettierrc.yml --write --list-different 'test/**/*.js' || true",
+    "fix": "npm run fix-sol && npm run fix-js",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "ignore": [
+      "contracts/Migrations.sol",
+      "migrations/*.js",
+      ".solcover.js"
+    ],
+    "linters": {
+      "*.sol": [
+        "solium -f"
+      ],
+      "*.js": [
+        "prettier --config .prettierrc.yml --list-different"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ujenjt/private-crowdsale.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ujenjt/private-crowdsale/issues"
+  },
+  "homepage": "https://github.com/ujenjt/private-crowdsale#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "bignumber.js": "^6.0.0",
+    "chai": "^4.1.2",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
+    "nanoid": "^1.0.2",
+    "prettier": "^1.11.1",
+    "solidity-coverage": "^0.5.4",
+    "solium": "^1.1.7",
+    "solium-plugin-zeppelin": "OpenZeppelin/solium-plugin-zeppelin",
+    "truffle": "^4.1.11",
+    "truffle-contract": "^3.0.4",
+    "web3": "^0.20.6"
+  },
+  "dependencies": {
+    "traverse": "^0.6.6",
+    "openzeppelin-solidity": "1.10.0"
+  }
+}

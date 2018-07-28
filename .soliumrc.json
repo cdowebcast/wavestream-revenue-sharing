@@ -1,0 +1,20 @@
+{
+  "extends": "solium:all",
+  "plugins": ["security"],
+  "rules": {
+    "quotes": ["error", "double"],
+    "indentation": ["error", 2],
+    "security/enforce-explicit-visibility": ["error"],
+    "security/no-var": ["error"],
+    "security/else-after-elseif": ["warning"],
+    "security/enforce-placeholder-last": ["warning"],
+    "security/max-statements-in-func": ["warning", 25],
+    "zeppelin/constant-candidates": ["warning"],
+    "zeppelin/highlight-comments": ["warning"],
+    "zeppelin/missing-natspec-comments": ["warning"],
+    "zeppelin/no-arithmetic-operations": ["warning"],
+    "zeppelin/no-state-variable-shadowing": ["error"],
+    "zeppelin/no-unchecked-send": ["error"],
+    "zeppelin/no-unused-imports": ["error"]
+  }
+}
