@@ -13,6 +13,9 @@ Contracts:
 Tests/specification:
 
 * [test-1-happy-path.js](test/test-1-happy-path.js): specification/documentation covering basic usage of revenue sharing contract.
+* [test-2-contract-deployment.js](test/test-2-contract-deployment.js): tests for contract pre-deployment checks.
+* [test-3-dividends-accounting.js](test/test-3-dividends-accounting.js): tests for total revenue accounting.
+* [test-4-shareholder-payouts.js](test/test-4-shareholder-payouts.js): tests for payout amounts and accessibility.
 
 ## Development
 
