@@ -8,9 +8,25 @@ Ethereum contracts for [Wavestream](https://wavestream.io/) platform revenue sha
 
 The `WavSharing contract` is designed for trustless distribution of revenue from music streaming on WaveStream platform. The platform and the contract use WAV token for accounting and value transfer.
 
-Contract holds immutable list of shareholders (musicians, producers, music labels, etc.) and their shares. For any changes platform should deploy new instance of the contract and could abandon original contract. Any shareholder could claim her share of WAV revenue any time by calling `claimShare` smart contract method. If all due tokens are already sent to the shareholder address, nothing happens.
+Contract holds immutable list of shareholders (musicians, producers, music labels, etc.) and their shares. For any changes platform should deploy new instance of the contract and stop sending WAV tokens to the original one. Any shareholder could claim her share of WAV revenue any time by calling `claimShare` Smart contract method. In case all due tokens are already sent to the shareholder address, nothing happens.
 
-Accounting is organized as follows. For every shareholder contract saves total amount of revenue it was called with `claimTokens`. Using this value and contract WAV balance respective WAV share of claimer is calculated and transferred.
+Contract calculates due WAV amount for every claim as follows:
+
+```
+WAV_share = (totalRevenue - lastShareholderPayoutRevenue) * share
+```
+
+Here `totalRevenue` is contract-wide counter of all the revenue received by the contract; `lastShareholderPayoutRevenue` is the value of `totalRevenue` counter from the previous time the shareholder has claimed her share, and the `share` is proportion of revenue assigned to the shareholder. Note that due to specifics of Solidity language used for `WavSharing` Smart contract shares are specified as thousandths fractions, so for instance `250` share in Smart contract translates to 25% of revenue.
+
+## Wavestream platform integration
+
+For every list of revenue shareholders platform would deploy the contract. Every once in a defined time period platform would calculate revenue associated with the contract and send WAV tokens to its address. Shareholders could then claim their revenue share in a trustless manner. To change the list of shareholders or their shares platform ought to deploy new contract and change internal associations.
+
+## Smart contract security notes
+
+`WavSharing` Smart contract is tested to 100% branch coverage, checked with `solium` linter with `security` plugin. To ensure protection from integer overflow errors `SafeMath` library from `OpenZepplin` framework is used.
+
+Note that generally speaking `WavSharing` contract could be exposed to reentrancy attack via `claimShare` method if purposelly coded token contract is used. In real-life scenarios `WavSharing` contract would be used by WaveStream platform with its own WAV token contract, thus negating potential vulnerability.
 
 ## Repository structure
 
