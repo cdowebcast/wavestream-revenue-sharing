@@ -1,7 +1,6 @@
 import chai from 'chai'
 import BigNumber from 'bignumber.js'
 import traverse from 'traverse'
-import generateRandomString from 'nanoid/generate'
 
 export const assert = chai.assert
 
