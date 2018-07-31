@@ -22,7 +22,7 @@ contract(`WavSharing (shareholder payouts):`, accounts => {
   it(`sends nothing to non-shareholder`, async () => {
     const {anonymous} = addr
     const anonymousBalanceBefore = await token.balanceOf(anonymous)
-    await wavSharing.claimDividend({from: anonymous})
+    await wavSharing.claimShare({from: anonymous})
     const anonymousBalanceAfter = await token.balanceOf(anonymous)
     assert.bignumEqual(anonymousBalanceBefore, anonymousBalanceAfter)
   })
@@ -35,7 +35,7 @@ contract(`WavSharing (shareholder payouts):`, accounts => {
       .multipliedBy(shares[0])
       .dividedBy(1000)
 
-    await wavSharing.claimDividend({from: firstShareholder})
+    await wavSharing.claimShare({from: firstShareholder})
 
     const firstShareholderTokenBalanceAfter = await token.balanceOf(
       firstShareholder,
@@ -61,7 +61,7 @@ contract(`WavSharing (shareholder payouts):`, accounts => {
       .multipliedBy(shares[1])
       .dividedBy(1000)
 
-    await wavSharing.claimDividend({from: secondShareholder})
+    await wavSharing.claimShare({from: secondShareholder})
 
     const secondShareholderTokenBalanceAfter = await token.balanceOf(
       secondShareholder,
@@ -80,7 +80,7 @@ contract(`WavSharing (shareholder payouts):`, accounts => {
       .multipliedBy(shares[0])
       .dividedBy(1000)
 
-    await wavSharing.claimDividend({from: firstShareholder})
+    await wavSharing.claimShare({from: firstShareholder})
 
     const firstShareholderTokenBalanceAfter = await token.balanceOf(
       firstShareholder,
@@ -100,7 +100,7 @@ contract(`WavSharing (shareholder payouts):`, accounts => {
       .multipliedBy(shares[2])
       .dividedBy(1000)
 
-    await wavSharing.claimDividend({from: thirdShareholder})
+    await wavSharing.claimShare({from: thirdShareholder})
 
     const thirdShareholderTokenBalanceAfter = await token.balanceOf(
       thirdShareholder,
@@ -118,7 +118,7 @@ contract(`WavSharing (shareholder payouts):`, accounts => {
 
   it(`zeroes out shareholder balances after all payouts`, async () => {
     for (let shareholder of addr.shareholders) {
-      const balance = await wavSharing.dividendBalanceOf.call(shareholder)
+      const balance = await wavSharing.ownedShareOf.call(shareholder)
       assert.bignumEqual(balance, 0)
     }
   })

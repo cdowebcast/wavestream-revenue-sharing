@@ -9,14 +9,14 @@ contract WavSharing {
 
   struct Shareholder {
     uint256 share;
-    uint256 lastDividends;
+    uint256 lastRevenue;
   }
 
   mapping (address => Shareholder) shareholders;
-  uint256 public dividendsPaid;
+  uint256 public sharesPaid;
   ERC20 public token;
 
-  event DividendsPaid(
+  event SharesPaid(
     address indexed shareholder,
     uint256 value
   );
@@ -40,31 +40,31 @@ contract WavSharing {
       totalShare = totalShare.add(_shares[i]);
       shareholders[_shareholders[i]] = Shareholder({
         share: _shares[i],
-        lastDividends: 0
+        lastRevenue: 0
       });
     }
     require(totalShare == 1000);
   }
 
-  function totalDividends() public view returns (uint256) {
+  function totalRevenue() public view returns (uint256) {
     uint256 currentBalanceOnContract = token.balanceOf(address(this));
-    return currentBalanceOnContract.add(dividendsPaid);
+    return currentBalanceOnContract.add(sharesPaid);
   }
 
-  function dividendBalanceOf(address account) public view returns (uint256) {
-    uint256 newDividends = totalDividends().sub(shareholders[account].lastDividends);
+  function ownedShareOf(address account) public view returns (uint256) {
+    uint256 newDividends = totalRevenue().sub(shareholders[account].lastRevenue);
     return shareholders[account].share.mul(newDividends).div(1000);
   }
 
-  function claimDividend() public {
-    uint256 owing = dividendBalanceOf(msg.sender);
+  function claimShare() public {
+    uint256 owing = ownedShareOf(msg.sender);
     if (owing > 0) {
       token.transfer(msg.sender, owing);
-      dividendsPaid = dividendsPaid.add(owing);
+      sharesPaid = sharesPaid.add(owing);
 
-      shareholders[msg.sender].lastDividends = totalDividends();
+      shareholders[msg.sender].lastRevenue = totalRevenue();
 
-      emit DividendsPaid(msg.sender, owing);
+      emit SharesPaid(msg.sender, owing);
     }
   }
 }

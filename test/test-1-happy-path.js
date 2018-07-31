@@ -34,10 +34,10 @@ contract(`WavSharing (happy path):`, accounts => {
       .dividedBy(1000)
 
     await assertTxSucceedsGeneratingEvents(
-      wavSharing.claimDividend({from: firstShareholder}),
+      wavSharing.claimShare({from: firstShareholder}),
       [
         {
-          name: 'DividendsPaid',
+          name: 'SharesPaid',
           args: {
             shareholder: firstShareholder,
             value: firstShareholderShare,
@@ -60,10 +60,10 @@ contract(`WavSharing (happy path):`, accounts => {
       .dividedBy(1000)
 
     await assertTxSucceedsGeneratingEvents(
-      wavSharing.claimDividend({from: secondShareholder}),
+      wavSharing.claimShare({from: secondShareholder}),
       [
         {
-          name: 'DividendsPaid',
+          name: 'SharesPaid',
           args: {
             shareholder: secondShareholder,
             value: secondShareholderShare,
@@ -81,10 +81,10 @@ contract(`WavSharing (happy path):`, accounts => {
       .dividedBy(1000)
 
     await assertTxSucceedsGeneratingEvents(
-      wavSharing.claimDividend({from: firstShareholder}),
+      wavSharing.claimShare({from: firstShareholder}),
       [
         {
-          name: 'DividendsPaid',
+          name: 'SharesPaid',
           args: {
             shareholder: firstShareholder,
             value: firstShareholderShare,
@@ -103,10 +103,10 @@ contract(`WavSharing (happy path):`, accounts => {
       .dividedBy(1000)
 
     await assertTxSucceedsGeneratingEvents(
-      wavSharing.claimDividend({from: thirdShareholder}),
+      wavSharing.claimShare({from: thirdShareholder}),
       [
         {
-          name: 'DividendsPaid',
+          name: 'SharesPaid',
           args: {
             shareholder: thirdShareholder,
             value: thirdShareholderShare,

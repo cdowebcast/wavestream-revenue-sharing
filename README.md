@@ -4,6 +4,14 @@ Ethereum contracts for [Wavestream](https://wavestream.io/) platform revenue sha
 
 ![wavestream](wavestream.png)
 
+## Revenue sharing mechanics
+
+The `WavSharing contract` is designed for trustless distribution of revenue from music streaming on WaveStream platform. The platform and the contract use WAV token for accounting and value transfer.
+
+Contract holds immutable list of shareholders (musicians, producers, music labels, etc.) and their shares. For any changes platform should deploy new instance of the contract and could abandon original contract. Any shareholder could claim her share of WAV revenue any time by calling `claimShare` smart contract method. If all due tokens are already sent to the shareholder address, nothing happens.
+
+Accounting is organized as follows. For every shareholder contract saves total amount of revenue it was called with `claimTokens`. Using this value and contract WAV balance respective WAV share of claimer is calculated and transferred.
+
 ## Repository structure
 
 Contracts:
